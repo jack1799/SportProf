@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Sport prof</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("SportProf", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (HttpContext.Current.Request.Url.AbsolutePath == "/Home/Competitions")
+                    {
+                        <li class="nav-tabs active" style="opacity: 0.7">@Html.ActionLink("Competitions", "Competitions", "Home")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Competitions", "Competitions", "Home")</li>
+                    }
+                    @if (HttpContext.Current.Request.Url.AbsolutePath == "/Home/Manage")
+                    {
+                        <li class="nav-tabs active" style="opacity: 0.7">@Html.ActionLink("Manage", "Manage", "Home")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Manage", "Manage", "Home")</li>
+                    }
+                    @if (this.User.IsInRole("admin"))
+                    {
+                        if (HttpContext.Current.Request.Url.AbsolutePath == "/Home/Users")
+                        {
+                            <li class="nav-tabs active" style="opacity: 0.7">@Html.ActionLink("Users", "Users", "Home")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Users", "Users", "Home")</li>
+                        }
+                    }
+                </ul>
+
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <footer class="footer">
+            <div class="navbar-fixed-bottom">
+                <hr style="margin: 6px" />
+                <div style="background-color:ghostwhite; margin-top:-6px; margin-bottom:-5px">
+                    <p class="text-center text-muted" style="margin:auto; margin-bottom:5px">&copy; @DateTime.Now.Year -  <a href="~/" class="text-muted">SportProf</a></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

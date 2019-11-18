@@ -1,0 +1,52 @@
+﻿@model PagedList.IPagedList<SportProf.Models.ApplicationUser>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Users";
+}
+<meta http-equiv="refresh" content="300; URL=">
+
+<h2 class="page-header">Users</h2>
+
+@if (ViewBag.Messages != null)
+{
+    foreach (SportProf.Models.Message message in ViewBag.Messages)
+    {
+        <div class="alert @message.Type alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>@message.Subject</strong> @message.Body
+        </div>
+    }
+}
+
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+            <th class="text-center">UserName</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">PhoneNumber</th>
+            <th class="text-center">CompetitionCount</th>
+            <th class="text-center">Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-center">@item.UserName</td>
+                <td class="text-center">@item.Email</td>
+                <td class="text-center">@item.PhoneNumber</td>
+                <td class="text-center">@item.CompetitionCount</td>
+                @if (@item.Roles.Count > 1)
+                {
+                    <td class="text-center">Admin</td>
+                }
+                else
+                {
+                    <td class="text-center">User</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="navbar-right">@Html.PagedListPager(Model, page => Url.Action("Users", new { page }))</div>

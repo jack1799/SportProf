@@ -1,0 +1,118 @@
+﻿@model PagedList.IPagedList<SportProf.Models.Competition>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Competitions";
+}
+
+<meta http-equiv="refresh" content="300; URL=">
+
+<h2 class="page-header">Competitions <a class="btn btn-success navbar-right" style="width:100px" href="~/Home/Create?red=competitions">Create new</a></h2>
+
+@if (ViewBag.Messages != null)
+{
+    foreach (SportProf.Models.Message message in ViewBag.Messages)
+    {
+        <div class="alert @message.Type alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>@message.Subject</strong> @message.Body
+        </div>
+    }
+}
+
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+            <th class="text-center">Name</th>
+            <th class="text-center">Competition type</th>
+            <th class="text-center">Description</th>
+            <th class="text-center">User name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            switch (item.Status)
+            {
+                case SportProf.Models.Status.Requests:
+                    <tr>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.CompetitionType.Name)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Description)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.ApplicationUser.UserName)</td>
+                        <td class="col-lg-3 text-center">
+                            @if (!ViewBag.Requests[@item.Id])
+                            {
+                                <a class="btn btn-success" href="~/Home/SendRequest?id=@item.Id" style="width:85px">Join</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-success" href="~/Home/RemoveCurUserRequest?cid=@item.Id" style="width:85px">Undo</a>
+                            }
+                            @if (this.User.Identity.Name == item.ApplicationUser.UserName)
+                            {
+                                <a class="btn btn-info" href="~/Home/Edit?cid=@item.Id&red=competitions" style="width:85px">Edit</a>
+                            }
+                            @if (this.User.Identity.Name == item.ApplicationUser.UserName || this.User.IsInRole("admin"))
+                            {
+                                <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=competitions" style="width:85px">Remove</a>
+                            }
+                        </td>
+                    </tr>
+                    break;
+                case SportProf.Models.Status.Prepare:
+                    <tr class="warning">
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.CompetitionType.Name)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Description)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.ApplicationUser.UserName)</td>
+                        <td class="col-lg-3 text-center">
+                            <a class="btn btn-success" href="~/Home/Info?cid=@item.Id&red=competitions" style="width:85px">Info</a>
+                            @if (this.User.Identity.Name == item.ApplicationUser.UserName)
+                            {
+                                <a class="btn btn-info" href="~/Home/Edit?cid=@item.Id&red=competitions" style="width:85px">Edit</a>
+                            }
+                            @if (this.User.Identity.Name == item.ApplicationUser.UserName || this.User.IsInRole("admin"))
+                            {
+                                <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=competitions" style="width:85px">Remove</a>
+                            }
+                        </td>
+                    </tr>
+                    break;
+                case SportProf.Models.Status.Start:
+                    <tr class="success">
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.CompetitionType.Name)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Description)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.ApplicationUser.UserName)</td>
+                        <td class="col-lg-3 text-center">
+                            <a class="btn btn-success" href="~/Home/Result?cid=@item.Id&red=competitions" style="width:85px">Info</a>
+                            @if (this.User.Identity.Name == item.ApplicationUser.UserName || this.User.IsInRole("admin"))
+                            {
+                                <a class="btn btn-info" href="~/Home/Watch?cid=@item.Id&red=competitions" style="width:85px">Watch</a>
+                                <a class="btn btn-danger" href="~/Home/StopCompetition?id=@item.Id" style="width:85px">End</a>
+                            }
+                        </td>
+                    </tr>
+                    break;
+                case SportProf.Models.Status.End:
+                    <tr class="danger">
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.CompetitionType.Name)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Description)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.ApplicationUser.UserName)</td>
+                        <td class="col-lg-3 text-center">
+                            <a class="btn btn-success" href="~/Home/Result?cid=@item.Id&red=competitions" style="width:85px">Result</a>
+                            @if (this.User.Identity.Name == item.ApplicationUser.UserName || this.User.IsInRole("admin"))
+                            {
+                                <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=competitions" style="width:85px">Remove</a>
+                            }
+                        </td>
+                    </tr>
+                    break;
+            }
+        }
+    </tbody>
+</table>
+<div class="navbar-right">@Html.PagedListPager(Model, page => Url.Action("Competitions", new { page }))</div>

@@ -1,0 +1,67 @@
+﻿@model PagedList.IPagedList<SportProf.Models.UserInCompetition>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Watch";
+}
+<meta http-equiv="refresh" content="10; URL=">
+
+<h2 class="page-header">
+    @if (Request.QueryString["red"] == "competitions")
+    {
+        <a class="glyphicon glyphicon-chevron-left" style="font-size:25px" href="Competitions"></a>
+    }
+    else
+    {
+        <a class="glyphicon glyphicon-chevron-left" style="font-size:25px" href="Manage"></a>
+    }
+    Watch
+</h2>
+
+@if (ViewBag.Messages != null)
+{
+    foreach (SportProf.Models.Message message in ViewBag.Messages)
+    {
+        <div class="alert @message.Type alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>@message.Subject</strong> @message.Body
+        </div>
+    }
+}
+
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+            <th class="text-center">UserName</th>
+            <th class="text-center">CompetitionCount</th>
+            <th class="text-center">Pulse</th>
+            <th class="text-center">Result</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-center">@item.User.UserName</td>
+                <td class="text-center">@item.User.CompetitionCount</td>
+                <td class="text-center">@item.Pulse</td>
+                <td style="width:150px"><input id="@item.Id" name="@item.Id" type="number" onchange="change(@item.Id, this.value)" value="@item.Result" class="form-control text-center"></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="navbar-right">@Html.PagedListPager(Model, page => Url.Action("Watch", new { page, cid = Request.QueryString["cid"], red = Request.QueryString["red"] }))</div>
+
+<script type="text/javascript">
+    function change(id, val) {
+        $.ajax({
+            type: "POST",
+            url: "/Home/Save",
+            data: "{id: '" + id + "' , result :'" + val + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            cache: false
+        });
+    }
+</script>
