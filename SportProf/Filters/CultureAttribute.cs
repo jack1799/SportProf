@@ -10,7 +10,7 @@ namespace SportProf.Filters
 {
     public class CultureAttribute : FilterAttribute, IActionFilter
     {
-        public void OnActionExecuted(ActionExecutedContext filterContext)
+        public void OnActionExecuting(ActionExecutingContext filterContext)
         {
             string cultureName = null;
             // Получаем куки из контекста, которые могут содержать установленную культуру
@@ -30,7 +30,7 @@ namespace SportProf.Filters
             Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(cultureName);
         }
 
-        public void OnActionExecuting(ActionExecutingContext filterContext)
+        public void OnActionExecuted(ActionExecutedContext filterContext)
         {
             //не реализован
         }

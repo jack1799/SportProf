@@ -2,7 +2,7 @@
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Edit competition";
+    ViewBag.Title = Resources.Editr.Title;
 }
 <meta http-equiv="refresh" content="300; URL=">
 
@@ -19,8 +19,8 @@
         {
             <a class="glyphicon glyphicon-chevron-left" style="font-size:25px" href="Manage"></a>
         }
-        Edit
-        <input type="submit" value="Save" class="btn btn-success navbar-right" style="width:100px" />
+        @Resources.Editr.Edit
+        <input type="submit" value="@Resources.Editr.Save" class="btn btn-success navbar-right" style="width:100px" />
     </h2>
 
     if (ViewBag.Messages != null)
@@ -38,39 +38,39 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            <label class="control-label col-md-2">Type</label>
+            <label class="control-label col-md-2">@Resources.Editr.Type</label>
             <div class="col-md-10">
                 @Html.DropDownList("type", (List<SelectListItem>)ViewBag.CompetitionTypes, new { @class = "form-control", style = "width:50%; max-width:70%; max-height:250px; min-width:48.5%; min-height:35px" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">Name</label>
+            <label class="control-label col-md-2">@Resources.Editr.Name</label>
             <div class="col-md-10">
                 <input id="name" name="name" type="text" class="form-control" style="width:50%; max-width:70%; max-height:250px;" value="@Model.Name" />
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">Description</label>
+            <label class="control-label col-md-2">@Resources.Editr.Description</label>
             <div class="col-md-10">
                 <textarea id="description" name="description" class="form-control" style="width:50%; max-width:70%; max-height:250px; min-width:48.5%; min-height:35px">@Model.Description</textarea>
             </div>
         </div>
 
         <h3 style="margin-top:10px">
-            Locations
+            @Resources.Editr.Locations
             @if (Model.Status == SportProf.Models.Status.Requests)
             {
-                <a class="btn btn-success navbar-right" style="width:130px" href="AddLocation?cid=@Request.QueryString["cid"]&red=@Request.QueryString["red"]">Add</a>
+                <a class="btn btn-success navbar-right" style="width:130px" href="AddLocation?cid=@Request.QueryString["cid"]&red=@Request.QueryString["red"]">@Resources.Editr.Add</a>
             }
         </h3>
 
         <table class="table table-hover table-responsive">
             <thead>
                 <tr>
-                    <th class="text-center">Name</th>
-                    <th class="text-center">User count</th>
+                    <th class="text-center">@Resources.Editr.Name</th>
+                    <th class="text-center">@Resources.Editr.UserCount</th>
                     <th></th>
                 </tr>
             </thead>
@@ -83,7 +83,7 @@
                         <td class="col-lg-3 text-center">
                             @if (Model.Status == SportProf.Models.Status.Requests)
                             {
-                                <a class="btn btn-danger" href="~/Home/RemoveLocation?cid=@Request.QueryString["cid"]&id=@item.Id&red=@Request.QueryString["red"]" style="width:85px">Remove</a>
+                            <a class="btn btn-danger" href="~/Home/RemoveLocation?cid=@Request.QueryString["cid"]&id=@item.Id&red=@Request.QueryString["red"]" style="width:85px">@Resources.Editr.Remove</a>
                             }
                         </td>
                     </tr>
@@ -93,24 +93,24 @@
 
         @if (Model.Status == SportProf.Models.Status.Requests)
         {
-            <h3 style="margin-top:10px">
-                Accepted requests
-                @if (ViewBag.Count == 0)
-                {
-                    <a class="btn btn-success navbar-right" style="width:130px" href="Requests?cid=@Request.QueryString["cid"]&red=@Request.QueryString["red"]">Requests (@ViewBag.Count)</a>
-                }
-                else
-                {
-                    <a class="btn btn-warning navbar-right" style="width:130px" href="Requests?cid=@Request.QueryString["cid"]&red=@Request.QueryString["red"]">Requests (@ViewBag.Count)</a>
-                }
-            </h3>
+        <h3 style="margin-top:10px">
+            @Resources.Editr.AcceptedRequests
+            @if (ViewBag.Count == 0)
+            {
+            <a class="btn btn-success navbar-right" style="width:130px" href="Requests?cid=@Request.QueryString["cid"]&red=@Request.QueryString["red"]">@Resources.Editr.Requests (@ViewBag.Count)</a>
+            }
+            else
+            {
+            <a class="btn btn-warning navbar-right" style="width:130px" href="Requests?cid=@Request.QueryString["cid"]&red=@Request.QueryString["red"]">@Resources.Editr.Requests (@ViewBag.Count)</a>
+            }
+        </h3>
 
             <table class="table table-hover table-responsive">
                 <thead>
                     <tr>
-                        <th class="text-center">User name</th>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">Phone</th>
+                        <th class="text-center">@Resources.Editr.UserName</th>
+                        <th class="text-center">@Resources.Editr.Email</th>
+                        <th class="text-center">@Resources.Editr.Phone</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -122,7 +122,7 @@
                             <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
                             <td class="text-center">@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                             <td class="col-lg-3 text-center">
-                                <a class="btn btn-danger" href="~/Home/RemoveUserRequest?cid=@Request.QueryString["cid"]&id=@item.Id&red=@Request.QueryString["red"]" style="width:85px">Remove</a>
+                                <a class="btn btn-danger" href="~/Home/RemoveUserRequest?cid=@Request.QueryString["cid"]&id=@item.Id&red=@Request.QueryString["red"]" style="width:85px">@Resources.Editr.Remove</a>
                             </td>
                         </tr>
                     }

@@ -5,14 +5,6 @@ using System.Web;
 
 namespace SportProf.Models
 {
-    public enum Status
-    {
-        Requests,
-        Prepare,
-        Start,
-        End
-    }
-
     public class Competition
     {
         public int Id { get; set; }

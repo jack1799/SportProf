@@ -2,11 +2,11 @@
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Competition requests";
+    ViewBag.Title = Resources.Requestsr.Title;
 }
 <meta http-equiv="refresh" content="300; URL=">
 
-<h2 class="page-header"><a class="glyphicon glyphicon-chevron-left" style="font-size:25px" href="Edit?cid=@Request.QueryString["cid"]&red=@Request.QueryString["red"]"></a> Competition requests</h2>
+<h2 class="page-header"><a class="glyphicon glyphicon-chevron-left" style="font-size:25px" href="Edit?cid=@Request.QueryString["cid"]&red=@Request.QueryString["red"]"></a> @Resources.Requestsr.CompetitionRequests</h2>
 
 @if (ViewBag.Messages != null)
 {
@@ -22,10 +22,10 @@
 <table class="table table-hover table-responsive">
     <thead>
         <tr>
-            <th class="text-center">Name</th>
-            <th class="text-center">Description</th>
-            <th class="text-center">Email</th>
-            <th class="text-center">Competition count</th>
+            <th class="text-center">@Resources.Requestsr.Name</th>
+            <th class="text-center">@Resources.Requestsr.Description</th>
+            <th class="text-center">@Resources.Requestsr.Email</th>
+            <th class="text-center">@Resources.Requestsr.CompetitionCount</th>
             <th></th>
         </tr>
     </thead>
@@ -38,8 +38,8 @@
                 <td class="text-center">@Html.DisplayFor(modelItem => item.ApplicationUser.Email)</td>
                 <td class="text-center">@Html.DisplayFor(modelItem => item.ApplicationUser.CompetitionCount)</td>
                 <td class="col-lg-3 text-center">
-                    <a class="btn btn-success" href="~/Home/AcceptRequest?cid=@Request.QueryString["cid"]&id=@item.Id&red=@Request.QueryString["red"]" style="width:85px">Accept</a>
-                    <a class="btn btn-danger" href="~/Home/RemoveRequest?cid=@Request.QueryString["cid"]&id=@item.Id&red=@Request.QueryString["red"]" style="width:85px">Decline</a>
+                    <a class="btn btn-success" href="~/Home/AcceptRequest?cid=@Request.QueryString["cid"]&id=@item.Id&red=@Request.QueryString["red"]" style="width:85px">@Resources.Requestsr.Accept</a>
+                    <a class="btn btn-danger" href="~/Home/RemoveRequest?cid=@Request.QueryString["cid"]&id=@item.Id&red=@Request.QueryString["red"]" style="width:85px">@Resources.Requestsr.Decline</a>
                 </td>
             </tr>
         }

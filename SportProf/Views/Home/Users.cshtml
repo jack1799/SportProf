@@ -2,11 +2,11 @@
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Users";
+    ViewBag.Title = Resources.Usersr.Title;
 }
 <meta http-equiv="refresh" content="300; URL=">
 
-<h2 class="page-header">Users</h2>
+<h2 class="page-header">@Resources.Usersr.Users</h2>
 
 @if (ViewBag.Messages != null)
 {
@@ -22,11 +22,11 @@
 <table class="table table-hover table-responsive">
     <thead>
         <tr>
-            <th class="text-center">UserName</th>
-            <th class="text-center">Email</th>
-            <th class="text-center">PhoneNumber</th>
-            <th class="text-center">CompetitionCount</th>
-            <th class="text-center">Role</th>
+            <th class="text-center">@Resources.Usersr.UserName</th>
+            <th class="text-center">@Resources.Usersr.Email</th>
+            <th class="text-center">@Resources.Usersr.PhoneNumber</th>
+            <th class="text-center">@Resources.Usersr.CompetitionCount</th>
+            <th class="text-center">@Resources.Usersr.Role</th>
         </tr>
     </thead>
     <tbody>

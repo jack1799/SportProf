@@ -8,19 +8,31 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    @Resources.Main.Lang
+                    @switch (@Resources.Main.Lang)
+                    {
+                        case "English":
+                            <img src="~/Resources/Img/united_kingdom_round_icon_64.png" style="width:33px; margin-top:-15px; margin-bottom:-15px" />
+                            break;
+                        case "Русский":
+                            <img src="~/Resources/Img/russia_round_icon_64.png" style="width:33px; margin-top:-15px; margin-bottom:-15px" />
+                            break;
+                        case "Українська":
+                            <img src="~/Resources/Img/ukraine_round_icon_64.png" style="width:33px; margin-top:-15px; margin-bottom:-15px" />
+                            break;
+                    }
+                    @*@Resources.Main.Lang*@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="~/Home/ChangeCulture?lang=en">English</a></li>
-                    <li><a href="~/Home/ChangeCulture?lang=ru">Русский</a></li>
-                    <li><a href="~/Home/ChangeCulture?lang=uk">Українська</a></li>
+                    <li><a href="~/Home/ChangeCulture?lang=en"><img src="~/Resources/Img/united_kingdom_round_icon_64.png" style="width:30px" />English</a></li>
+                    <li><a href="~/Home/ChangeCulture?lang=ru"><img src="~/Resources/Img/russia_round_icon_64.png" style="width:30px" />Русский</a></li>
+                    <li><a href="~/Home/ChangeCulture?lang=uk"><img src="~/Resources/Img/ukraine_round_icon_64.png" style="width:30px" />Українська</a></li>
                 </ul>
             </li>
             <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink(Resources.Main.Hello + " " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">@Resources.Main.Logoff</a></li>
         </ul>
     }
 }
@@ -38,7 +50,7 @@ else
                 <li><a href="~/Home/ChangeCulture?lang=uk">Українська</a></li>
             </ul>
         </li>
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink(Resources.Main.Register, "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink(Resources.Main.Login, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

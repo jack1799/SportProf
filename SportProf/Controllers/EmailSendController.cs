@@ -1,8 +1,10 @@
-﻿using System.Net.Mail;
+﻿using SportProf.Filters;
+using System.Net.Mail;
 using System.Threading;
 
 namespace SportProf.Controllers
 {
+    [Culture]
     public static class EmailSendController
     {
         public static void SendEmail(string recipient, string subject, string body)

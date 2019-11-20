@@ -20,17 +20,15 @@ namespace SportProf.Controllers
 
         public ActionResult ChangeCulture(string lang)
         {
-            string returnUrl = Request.UrlReferrer.AbsolutePath;
-            // Список культур
+            string returnUrl = Request.UrlReferrer.AbsoluteUri;
             List<string> cultures = new List<string>() { "en", "ru", "uk" };
             if (!cultures.Contains(lang))
             {
                 lang = "en";
             }
-            // Сохраняем выбранную культуру в куки
             HttpCookie cookie = Request.Cookies["lang"];
             if (cookie != null)
-                cookie.Value = lang;   // если куки уже установлено, то обновляем значение
+                cookie.Value = lang;
             else
             {
 
@@ -115,12 +113,6 @@ namespace SportProf.Controllers
             }
             return View(db.Users.ToList().ToPagedList(page ?? 1, 8));
         }
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }//???
         #endregion
 
         #region Competition
@@ -158,7 +150,7 @@ namespace SportProf.Controllers
             if (i < 1)
             {
                 var ermessages = db.Users.FirstOrDefault(x => x.Id == id).Messages;
-                ermessages.Add(new Message { Subject = "Error!", Body = "Competition has not been created.", Type = "alert-danger" });
+                ermessages.Add(new Message { Subject = Resources.Messages.Error + "!", Body = Resources.Messages.CompCreateFailed, Type = "alert-danger" });
                 await db.SaveChangesAsync();
 
                 switch (red)
@@ -174,7 +166,7 @@ namespace SportProf.Controllers
 
             db.Competitions.Add(new Competition { Name = name, Description = description, CompetitionType = ctype, CompetitionTypeId = ctype.Id, ApplicationUser = applicationUser, ApplicationUserId = applicationUser.Id });
             var messages = db.Users.FirstOrDefault(x => x.Id == id).Messages;
-            messages.Add(new Message { Subject = "Success!", Body = "Competition has been created successfully.", Type = "alert-success" });
+            messages.Add(new Message { Subject = Resources.Messages.Success + "!", Body = Resources.Messages.CompCreateSuccess, Type = "alert-success" });
             await db.SaveChangesAsync();
 
             switch (red)
@@ -199,7 +191,7 @@ namespace SportProf.Controllers
             if (!User.IsInRole("admin") && User.Identity.Name != user)
             {
                 var ermessages = db.Users.FirstOrDefault(x => x.Id == uid).Messages;
-                ermessages.Add(new Message { Subject = "Error!", Body = "Competition has not been deleted.", Type = "alert-danger" });
+                ermessages.Add(new Message { Subject = Resources.Messages.Error + "!", Body = Resources.Messages.CompDelFailed, Type = "alert-danger" });
                 await db.SaveChangesAsync();
 
                 switch (red)
@@ -217,7 +209,7 @@ namespace SportProf.Controllers
             db.Locations.RemoveRange(db.Locations.Where(x => x.CompetitionId == id));
             db.Competitions.Remove(db.Competitions.FirstOrDefault(x => x.Id == id));
             var messages = db.Users.FirstOrDefault(x => x.Id == uid).Messages;
-            messages.Add(new Message { Subject = "Success!", Body = "Your competition has been deleted successfully.", Type = "alert-success" });
+            messages.Add(new Message { Subject = Resources.Messages.Success + "!", Body = Resources.Messages.CompDelSuccess, Type = "alert-success" });
             await db.SaveChangesAsync();
 
             switch (red)
@@ -284,7 +276,7 @@ namespace SportProf.Controllers
 
             var userid = this.User.Identity.GetUserId();
             var ermessages = db.Users.FirstOrDefault(x => x.Id == userid).Messages;
-            ermessages.Add(new Message { Subject = "Success!", Body = "Information has been saved successfully.", Type = "alert-success" });
+            ermessages.Add(new Message { Subject = Resources.Messages.Success + "!", Body = Resources.Messages.Saved, Type = "alert-success" });
 
             await db.SaveChangesAsync();
 
@@ -333,7 +325,7 @@ namespace SportProf.Controllers
 
             var id = this.User.Identity.GetUserId();
             var ermessages = db.Users.FirstOrDefault(x => x.Id == id).Messages;
-            ermessages.Add(new Message { Subject = "Success!", Body = "Location has been added successfully.", Type = "alert-success" });
+            ermessages.Add(new Message { Subject = Resources.Messages.Success + "!", Body = Resources.Messages.LocAddSuccess, Type = "alert-success" });
 
             await db.SaveChangesAsync();
 
@@ -350,7 +342,7 @@ namespace SportProf.Controllers
             db.Locations.Remove(db.Locations.FirstOrDefault(x => x.Id == id));
             var uid = this.User.Identity.GetUserId();
             var ermessages = db.Users.FirstOrDefault(x => x.Id == uid).Messages;
-            ermessages.Add(new Message { Subject = "Success!", Body = "Location has been deleted successfully.", Type = "alert-success" });
+            ermessages.Add(new Message { Subject = Resources.Messages.Success + "!", Body = Resources.Messages.LocDelSuccess, Type = "alert-success" });
             await db.SaveChangesAsync();
 
             return RedirectToAction("Edit", "Home", new { cid, red });
@@ -410,7 +402,7 @@ namespace SportProf.Controllers
             if (i < 1)
             {
                 var ermessages = db.Users.FirstOrDefault(x => x.Id == userid).Messages;
-                ermessages.Add(new Message { Subject = "Error!", Body = "Request has not been sent.", Type = "alert-danger" });
+                ermessages.Add(new Message { Subject = Resources.Messages.Error + "!", Body = Resources.Messages.RequestFailed, Type = "alert-danger" });
                 return RedirectToAction("Competitions", "Home");
             }
             db.Requests.Add(new Request { Name = name, Description = description, CompetitionId = competitionId, Competition = db.Competitions.FirstOrDefault(x => x.Id == competitionId), ApplicationUserId = applicationUser.Id, ApplicationUser = applicationUser });
@@ -418,7 +410,7 @@ namespace SportProf.Controllers
             List<Request> req = db.Requests.ToList();
 
             var messages = db.Users.FirstOrDefault(x => x.Id == userid).Messages;
-            messages.Add(new Message { Subject = "Success!", Body = "Request has been sent successfully.", Type = "alert-success" });
+            messages.Add(new Message { Subject = Resources.Messages.Success + "!", Body = Resources.Messages.RequestSuccess, Type = "alert-success" });
             await db.SaveChangesAsync();
 
             return RedirectToAction("Competitions", "Home");
@@ -457,7 +449,7 @@ namespace SportProf.Controllers
 
             string uid = this.User.Identity.GetUserId();
             var ermessages = db.Users.FirstOrDefault(x => x.Id == uid).Messages;
-            ermessages.Add(new Message { Subject = "Success!", Body = "Request has been accepted successfully.", Type = "alert-success" });
+            ermessages.Add(new Message { Subject = Resources.Messages.Success + "!", Body = Resources.Messages.AcceptSuccess, Type = "alert-success" });
 
             await db.SaveChangesAsync();
             return RedirectToAction("Edit", "Home", new { cid, red });
@@ -480,7 +472,7 @@ namespace SportProf.Controllers
 
             string uid = this.User.Identity.GetUserId();
             var ermessages = db.Users.FirstOrDefault(x => x.Id == uid).Messages;
-            ermessages.Add(new Message { Subject = "Success!", Body = "Request has been declined successfully.", Type = "alert-success" });
+            ermessages.Add(new Message { Subject = Resources.Messages.Success + "!", Body = Resources.Messages.DeclineSuccess, Type = "alert-success" });
 
             await db.SaveChangesAsync();
             return RedirectToAction("Edit", "Home", new { cid, red });
@@ -497,7 +489,7 @@ namespace SportProf.Controllers
 
             string uid = this.User.Identity.GetUserId();
             var ermessages = db.Users.FirstOrDefault(x => x.Id == uid).Messages;
-            ermessages.Add(new Message { Subject = "Success!", Body = "User has been removed successfully.", Type = "alert-success" });
+            ermessages.Add(new Message { Subject = Resources.Messages.Success + "!", Body = Resources.Messages.RequestDelSuccess, Type = "alert-success" });
 
             await db.SaveChangesAsync();
             return RedirectToAction("Edit", "Home", new { cid, red });
@@ -533,11 +525,11 @@ namespace SportProf.Controllers
                     {
                         db.UserInCompetitions.Add(new UserInCompetition { LocationId = loc.Id, Location = loc, UserId = item.ApplicationUserId, User = db.Users.FirstOrDefault(x => x.Id == item.ApplicationUserId) });
                         var umessages = db.Users.FirstOrDefault(x => x.Id == item.ApplicationUserId).Messages;
-                        umessages.Add(new Message { Subject = "Prepare for battle.", Body = "Prepare for battle in competition \"" + db.Competitions.FirstOrDefault(x => x.Id == id).Name + "\".\nYour location is \"" + loc.Name + "\"." });
+                        umessages.Add(new Message { Subject = Resources.Messages.PrepareMain, Body = Resources.Messages.PrepareComp + " \"" + db.Competitions.FirstOrDefault(x => x.Id == id).Name + "\".\n" + Resources.Messages.PrepareLoc + " \"" + loc.Name + "\".", Type = "alert-success" });
                         await db.SaveChangesAsync();
                         if (item.ApplicationUser.EmailConfirmed)
                         {
-                            EmailSendController.SendEmail(item.ApplicationUser.Email/*"jack991769@gmail.com"*/, "Prepare for battle.", "Prepare for battle in competition \"" + db.Competitions.FirstOrDefault(x => x.Id == id).Name + "\".\nYour location is \"" + loc.Name + "\".");
+                            EmailSendController.SendEmail(item.ApplicationUser.Email/*"jack991769@gmail.com"*/, Resources.Messages.PrepareMain, Resources.Messages.PrepareComp + " \"" + db.Competitions.FirstOrDefault(x => x.Id == id).Name + "\".\n" + Resources.Messages.PrepareLoc + " \"" + loc.Name + "\".");
                         }
                         break;
                     }
@@ -546,12 +538,11 @@ namespace SportProf.Controllers
                         locCount[loc.Id] = true;
                     }
 
-                    //если места нет, то переходим в след
                     if (locCount.Where(x => x.Value == false).Count() == 0) //если места нет нигде => ошибка
                     {
                         var cuid = this.User.Identity.GetUserId();
                         var cmessages = db.Users.FirstOrDefault(x => x.Id == cuid).Messages;
-                        cmessages.Add(new Message { Subject = "Error!", Body = "Locations will not be able to accommodate the selected number of people." });
+                        cmessages.Add(new Message { Subject = Resources.Messages.Error + "!", Body = Resources.Messages.UserCountError, Type = "alert-danger" });
                         await db.SaveChangesAsync();
                         return RedirectToAction("Manage", "Home");
                     }
@@ -561,7 +552,7 @@ namespace SportProf.Controllers
             db.Requests.RemoveRange(db.Requests.Where(x => x.CompetitionId == id));//???
             var uid = this.User.Identity.GetUserId();
             var messages = db.Users.FirstOrDefault(x => x.Id == uid).Messages;
-            messages.Add(new Message { Subject = "Success!", Body = "Your competition status is prepared" });
+            messages.Add(new Message { Subject = Resources.Messages.Success + "!", Body = Resources.Messages.StatusPrepared });
 
             await db.SaveChangesAsync();
 
@@ -580,11 +571,11 @@ namespace SportProf.Controllers
             foreach (UserInCompetition item in reqs)
             {
                 var umessages = db.Users.FirstOrDefault(x => x.Id == item.UserId).Messages;
-                umessages.Add(new Message { Subject = "Competition is started.", Body = "Competition \"" + db.Competitions.FirstOrDefault(x => x.Id == id).Name + "\" is started.\nYour location is \"" + item.Location.Name + "\"." });
+                umessages.Add(new Message { Subject = Resources.Messages.CompStart, Body = Resources.Messages.Competition + " \"" + db.Competitions.FirstOrDefault(x => x.Id == id).Name + "\" is started.\n" + Resources.Messages.PrepareLoc + " \"" + item.Location.Name + "\".", Type = "alert-success" });
             }
             var uid = this.User.Identity.GetUserId();
             var messages = db.Users.FirstOrDefault(x => x.Id == uid).Messages;
-            messages.Add(new Message { Subject = "Success!", Body = "Your competition status is started" });
+            messages.Add(new Message { Subject = Resources.Messages.Success + "!", Body = Resources.Messages.StatusStarted, Type = "alert-success" });
 
             await db.SaveChangesAsync();
             return RedirectToAction("Manage", "Home");
@@ -602,16 +593,16 @@ namespace SportProf.Controllers
             foreach (UserInCompetition item in reqs)
             {
                 var umessages = db.Users.FirstOrDefault(x => x.Id == item.UserId).Messages;
-                umessages.Add(new Message { Subject = "Competition is ended.", Body = "Competition \"" + db.Competitions.FirstOrDefault(x => x.Id == id).Name + "\" is ended.\nYour result is \"" + item.Result + "\"." });
+                umessages.Add(new Message { Subject = Resources.Messages.CompEnded, Body = Resources.Messages.Competition + " \"" + db.Competitions.FirstOrDefault(x => x.Id == id).Name + "\" " + Resources.Messages.isEnd + ".\n" + Resources.Messages.YourRes + " \"" + item.Result + "\".", Type = "alert-success" });
                 if (item.User.EmailConfirmed)
                 {
-                    EmailSendController.SendEmail(item.User.Email/*"jack991769@gmail.com"*/, "Competition is ended.", "Competition \"" + db.Competitions.FirstOrDefault(x => x.Id == id).Name + "\" is ended.\nYour result is \"" + item.Result + "\".");
+                    EmailSendController.SendEmail(item.User.Email/*"jack991769@gmail.com"*/, Resources.Messages.CompEnded, Resources.Messages.Competition + " \"" + db.Competitions.FirstOrDefault(x => x.Id == id).Name + "\" " + Resources.Messages.isEnd + ".\n" + Resources.Messages.YourRes + " \"" + item.Result + "\".");
                 }
                 db.Users.FirstOrDefault(x => x.Id == item.UserId).CompetitionCount += 1;
             }
             var uid = this.User.Identity.GetUserId();
             var messages = db.Users.FirstOrDefault(x => x.Id == uid).Messages;
-            messages.Add(new Message { Subject = "Success!", Body = "Your competition status is ended" });
+            messages.Add(new Message { Subject = Resources.Messages.Success + "!", Body = Resources.Messages.StatusEnded, Type = "alert-success" });
 
             await db.SaveChangesAsync();
             return RedirectToAction("Manage", "Home");
@@ -626,17 +617,29 @@ namespace SportProf.Controllers
         }
         #endregion
 
+        [HttpPost]
+        public void SendPulse(int cid, string email, int pulse)
+        {
+            db.UserInCompetitions.FirstOrDefault(x => x.User.Email == email && x.Location.CompetitionId == cid).Pulse = pulse;
+            db.SaveChanges();
+        }
     }
 }
-//возможность убрать свою заявку
 //уведомления при пустых таблицах
+//Competitions
+//Manage
+//Users
+//Edit -> Locations
+//Edit -> Acepted requests
+//Requests
+//Watch
+//Info
+//Result
+
 //ограничение по выводу данных на экран
 //ограничения запросов
+//регистрация и вход(login != email, phone, google add)
 
-//локализация(сайта+ошибок)
-//регистрация и вход (login != email, phone, google add)
+
 //типы соревнований в виде файла или админки
-//Переходы на стрелочки?!
-
-//бэкенд и проверка запросов
-//документы и диаграммы для сдачи
+//переходы на стрелочки?!

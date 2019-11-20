@@ -2,12 +2,12 @@
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Competitions";
+    ViewBag.Title = Resources.Competitionsr.Title;
 }
 
 <meta http-equiv="refresh" content="300; URL=">
 
-<h2 class="page-header">Competitions <a class="btn btn-success navbar-right" style="width:100px" href="~/Home/Create?red=competitions">Create new</a></h2>
+<h2 class="page-header">@Resources.Competitionsr.Competitions <a class="btn btn-success navbar-right" style="width:100px" href="~/Home/Create?red=competitions">@Resources.Competitionsr.CreateCompetition</a></h2>
 
 @if (ViewBag.Messages != null)
 {
@@ -23,10 +23,10 @@
 <table class="table table-hover table-responsive">
     <thead>
         <tr>
-            <th class="text-center">Name</th>
-            <th class="text-center">Competition type</th>
-            <th class="text-center">Description</th>
-            <th class="text-center">User name</th>
+            <th class="text-center">@Resources.Competitionsr.Name</th>
+            <th class="text-center">@Resources.Competitionsr.CompetitionType</th>
+            <th class="text-center">@Resources.Competitionsr.Description</th>
+            <th class="text-center">@Resources.Competitionsr.UserName</th>
             <th></th>
         </tr>
     </thead>
@@ -44,19 +44,19 @@
                         <td class="col-lg-3 text-center">
                             @if (!ViewBag.Requests[@item.Id])
                             {
-                                <a class="btn btn-success" href="~/Home/SendRequest?id=@item.Id" style="width:85px">Join</a>
+                            <a class="btn btn-success" href="~/Home/SendRequest?id=@item.Id" style="width:85px">@Resources.Competitionsr.Join</a>
                             }
                             else
                             {
-                                <a class="btn btn-success" href="~/Home/RemoveCurUserRequest?cid=@item.Id" style="width:85px">Undo</a>
+                            <a class="btn btn-success" href="~/Home/RemoveCurUserRequest?cid=@item.Id" style="width:85px">@Resources.Competitionsr.Undo</a>
                             }
                             @if (this.User.Identity.Name == item.ApplicationUser.UserName)
                             {
-                                <a class="btn btn-info" href="~/Home/Edit?cid=@item.Id&red=competitions" style="width:85px">Edit</a>
+                            <a class="btn btn-info" href="~/Home/Edit?cid=@item.Id&red=competitions" style="width:85px">@Resources.Competitionsr.Edit</a>
                             }
                             @if (this.User.Identity.Name == item.ApplicationUser.UserName || this.User.IsInRole("admin"))
                             {
-                                <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=competitions" style="width:85px">Remove</a>
+                            <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=competitions" style="width:85px">@Resources.Competitionsr.Remove</a>
                             }
                         </td>
                     </tr>
@@ -68,14 +68,14 @@
                         <td class="text-center">@Html.DisplayFor(modelItem => item.Description)</td>
                         <td class="text-center">@Html.DisplayFor(modelItem => item.ApplicationUser.UserName)</td>
                         <td class="col-lg-3 text-center">
-                            <a class="btn btn-success" href="~/Home/Info?cid=@item.Id&red=competitions" style="width:85px">Info</a>
+                            <a class="btn btn-success" href="~/Home/Info?cid=@item.Id&red=competitions" style="width:85px">@Resources.Competitionsr.Info</a>
                             @if (this.User.Identity.Name == item.ApplicationUser.UserName)
                             {
-                                <a class="btn btn-info" href="~/Home/Edit?cid=@item.Id&red=competitions" style="width:85px">Edit</a>
+                            <a class="btn btn-info" href="~/Home/Edit?cid=@item.Id&red=competitions" style="width:85px">@Resources.Competitionsr.Edit</a>
                             }
                             @if (this.User.Identity.Name == item.ApplicationUser.UserName || this.User.IsInRole("admin"))
                             {
-                                <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=competitions" style="width:85px">Remove</a>
+                            <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=competitions" style="width:85px">@Resources.Competitionsr.Remove</a>
                             }
                         </td>
                     </tr>
@@ -87,11 +87,11 @@
                         <td class="text-center">@Html.DisplayFor(modelItem => item.Description)</td>
                         <td class="text-center">@Html.DisplayFor(modelItem => item.ApplicationUser.UserName)</td>
                         <td class="col-lg-3 text-center">
-                            <a class="btn btn-success" href="~/Home/Result?cid=@item.Id&red=competitions" style="width:85px">Info</a>
+                            <a class="btn btn-success" href="~/Home/Result?cid=@item.Id&red=competitions" style="width:85px">@Resources.Competitionsr.Info</a>
                             @if (this.User.Identity.Name == item.ApplicationUser.UserName || this.User.IsInRole("admin"))
                             {
-                                <a class="btn btn-info" href="~/Home/Watch?cid=@item.Id&red=competitions" style="width:85px">Watch</a>
-                                <a class="btn btn-danger" href="~/Home/StopCompetition?id=@item.Id" style="width:85px">End</a>
+                            <a class="btn btn-info" href="~/Home/Watch?cid=@item.Id&red=competitions" style="width:85px">@Resources.Competitionsr.Watch</a>
+                            <a class="btn btn-danger" href="~/Home/StopCompetition?id=@item.Id" style="width:85px">@Resources.Competitionsr.End</a>
                             }
                         </td>
                     </tr>
@@ -103,10 +103,10 @@
                         <td class="text-center">@Html.DisplayFor(modelItem => item.Description)</td>
                         <td class="text-center">@Html.DisplayFor(modelItem => item.ApplicationUser.UserName)</td>
                         <td class="col-lg-3 text-center">
-                            <a class="btn btn-success" href="~/Home/Result?cid=@item.Id&red=competitions" style="width:85px">Result</a>
+                            <a class="btn btn-success" href="~/Home/Result?cid=@item.Id&red=competitions" style="width:85px">@Resources.Competitionsr.Result</a>
                             @if (this.User.Identity.Name == item.ApplicationUser.UserName || this.User.IsInRole("admin"))
                             {
-                                <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=competitions" style="width:85px">Remove</a>
+                            <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=competitions" style="width:85px">@Resources.Competitionsr.Remove</a>
                             }
                         </td>
                     </tr>

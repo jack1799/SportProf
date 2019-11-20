@@ -2,10 +2,10 @@
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = Resources.Manager.Title;
 }
 <meta http-equiv="refresh" content="300; URL=">
-<h2 class="page-header">Manage <a class="btn btn-success navbar-right" style="width:100px" href="~/Home/Create?red=manage">Create new</a></h2>
+<h2 class="page-header">@Resources.Manager.Manage <a class="btn btn-success navbar-right" style="width:100px" href="~/Home/Create?red=manage">@Resources.Manager.Create</a></h2>
 
 @if (ViewBag.Messages != null)
 {
@@ -21,9 +21,9 @@
 <table class="table table-hover table-responsive">
     <thead>
         <tr>
-            <th class="text-center">Name</th>
-            <th class="text-center">Competition type</th>
-            <th class="text-center">Description</th>
+            <th class="text-center">@Resources.Manager.Name</th>
+            <th class="text-center">@Resources.Manager.CompetitionType</th>
+            <th class="text-center">@Resources.Manager.Description</th>
             <th></th>
         </tr>
     </thead>
@@ -38,9 +38,9 @@
                         <td class="text-center">@Html.DisplayFor(modelItem => item.CompetitionType.Name)</td>
                         <td class="text-center">@Html.DisplayFor(modelItem => item.Description)</td>
                         <td class="col-lg-3 text-center">
-                            <a class="btn btn-success" href="~/Home/EndRequests?id=@item.Id" style="width:85px">Prepare</a>
-                            <a class="btn btn-info" href="~/Home/Edit?cid=@item.Id&red=manage" style="width:85px">Edit</a>
-                            <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=manage" style="width:85px">Remove</a>
+                            <a class="btn btn-success" href="~/Home/EndRequests?id=@item.Id" style="width:85px">@Resources.Manager.Prepare</a>
+                            <a class="btn btn-info" href="~/Home/Edit?cid=@item.Id&red=manage" style="width:85px">@Resources.Manager.Edit</a>
+                            <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=manage" style="width:85px">@Resources.Manager.Remove</a>
                         </td>
                     </tr>
                     break;
@@ -50,9 +50,9 @@
                         <td class="text-center">@Html.DisplayFor(modelItem => item.CompetitionType.Name)</td>
                         <td class="text-center">@Html.DisplayFor(modelItem => item.Description)</td>
                         <td class="col-lg-3 text-center">
-                            <a class="btn btn-success" href="~/Home/Start?id=@item.Id" style="width:85px">Start</a>@*prepare*@
-                            <a class="btn btn-info" href="~/Home/Edit?cid=@item.Id&red=manage" style="width:85px">Edit</a>
-                            <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=manage" style="width:85px">Remove</a>
+                            <a class="btn btn-success" href="~/Home/Start?id=@item.Id" style="width:85px">@Resources.Manager.Start</a>@*prepare*@
+                            <a class="btn btn-info" href="~/Home/Edit?cid=@item.Id&red=manage" style="width:85px">@Resources.Manager.Edit</a>
+                            <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=manage" style="width:85px">@Resources.Manager.Remove</a>
                         </td>
                     </tr>
                     break;
@@ -62,8 +62,8 @@
                         <td class="text-center">@Html.DisplayFor(modelItem => item.CompetitionType.Name)</td>
                         <td class="text-center">@Html.DisplayFor(modelItem => item.Description)</td>
                         <td class="col-lg-3 text-center">
-                            <a class="btn btn-info" href="~/Home/Watch?cid=@item.Id&red=manage" style="width:85px">Watch</a>@*output users state in real time updates*@
-                            <a class="btn btn-danger" href="~/Home/StopCompetition?id=@item.Id" style="width:85px">End</a>
+                            <a class="btn btn-info" href="~/Home/Watch?cid=@item.Id&red=manage" style="width:85px">@Resources.Manager.Watch</a>@*output users state in real time updates*@
+                            <a class="btn btn-danger" href="~/Home/StopCompetition?id=@item.Id" style="width:85px">@Resources.Manager.End</a>
                         </td>
                     </tr>
                     break;
@@ -73,8 +73,8 @@
                         <td class="text-center">@Html.DisplayFor(modelItem => item.CompetitionType.Name)</td>
                         <td class="text-center">@Html.DisplayFor(modelItem => item.Description)</td>
                         <td class="col-lg-3 text-center">
-                            <a class="btn btn-success" href="~/Home/Result?cid=@item.Id&red=manage" style="width:85px">Result</a>@*output result*@
-                            <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=manage" style="width:85px">Remove</a>
+                            <a class="btn btn-success" href="~/Home/Result?cid=@item.Id&red=manage" style="width:85px">@Resources.Manager.Result</a>@*output result*@
+                            <a class="btn btn-danger" href="~/Home/Remove?id=@item.Id&red=manage" style="width:85px">@Resources.Manager.Remove</a>
                         </td>
                     </tr>
                     break;

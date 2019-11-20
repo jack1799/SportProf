@@ -8,11 +8,13 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using SportProf.Filters;
 using SportProf.Models;
 
 namespace SportProf.Controllers
 {
     [Authorize]
+    [Culture]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;

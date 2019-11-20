@@ -23,29 +23,29 @@
                 <ul class="nav navbar-nav">
                     @if (HttpContext.Current.Request.Url.AbsolutePath == "/Home/Competitions")
                     {
-                        <li class="nav-tabs active" style="opacity: 0.7">@Html.ActionLink("Competitions", "Competitions", "Home")</li>
+                        <li class="nav-tabs active" style="opacity: 0.7">@Html.ActionLink(Resources.Main.Competitions, "Competitions", "Home")</li>
                     }
                     else
                     {
-                        <li>@Html.ActionLink("Competitions", "Competitions", "Home")</li>
+                        <li>@Html.ActionLink(Resources.Main.Competitions, "Competitions", "Home")</li>
                     }
                     @if (HttpContext.Current.Request.Url.AbsolutePath == "/Home/Manage")
                     {
-                        <li class="nav-tabs active" style="opacity: 0.7">@Html.ActionLink("Manage", "Manage", "Home")</li>
+                        <li class="nav-tabs active" style="opacity: 0.7">@Html.ActionLink(Resources.Main.Manage, "Manage", "Home")</li>
                     }
                     else
                     {
-                        <li>@Html.ActionLink("Manage", "Manage", "Home")</li>
+                        <li>@Html.ActionLink(Resources.Main.Manage, "Manage", "Home")</li>
                     }
                     @if (this.User.IsInRole("admin"))
                     {
                         if (HttpContext.Current.Request.Url.AbsolutePath == "/Home/Users")
                         {
-                            <li class="nav-tabs active" style="opacity: 0.7">@Html.ActionLink("Users", "Users", "Home")</li>
+                            <li class="nav-tabs active" style="opacity: 0.7">@Html.ActionLink(Resources.Main.Users, "Users", "Home")</li>
                         }
                         else
                         {
-                            <li>@Html.ActionLink("Users", "Users", "Home")</li>
+                            <li>@Html.ActionLink(Resources.Main.Users, "Users", "Home")</li>
                         }
                     }
                 </ul>
